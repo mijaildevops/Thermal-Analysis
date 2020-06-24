@@ -4,11 +4,7 @@ import time
 
 from PIL import Image
  
-#Cargamos la imagen:
-img = cv2.imread('frame-test9.jpg')
- 
-#Convertimos la imagen a hsv:
-hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
 #Nota 1: la constante COLOR_BGR2HSV indica que queremos pasar de BGR a HSV.
 #Nota 2: la función cvtColor() también sirve para transformar a otros espacios de color.
  
@@ -57,25 +53,30 @@ Scala8_altos = np.array([168, 255, 255])
 PorcentajePixel = []
 AnalisListColor = []
 
+#Cargamos la imagen:
+img = cv2.imread('frame-test8.jpg')
+
 def AnalisFrame (color, rango_bajos, rango_altos):
-    
-    print("")
+
     Pcolor = 0
     PorcentajeBlack = 0
+
+    #Convertimos la imagen a hsv:
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
     #Detectamos los píxeles que estén dentro del rango que hemos establecido:
     mask = cv2.inRange(hsv, rango_bajos, rango_altos)
     #print(len(mask))
 
     #Mostramos la imagen original y la máscara:
-    cv2.imshow("Original", img)
+    #cv2.imshow("Original", img)
 
     #Mostramos la imagen original y la máscara:
-    cv2.imshow(color, mask)
+    #cv2.imshow(color, mask)
 
-    cv2.imwrite('messigray.png',mask)
+    cv2.imwrite('FramePresado.png',mask)
     
-    foto = Image.open('messigray.png')
+    foto = Image.open('FramePresado.png')
     datos = list(foto.getdata())
     for dato in datos:
         if (int(dato)> 0):
@@ -84,6 +85,7 @@ def AnalisFrame (color, rango_bajos, rango_altos):
         else:
             PorcentajeBlack += 1
     foto.close()
+    
 
     Porcentajecolor = Pcolor*100/(Pcolor + PorcentajeBlack)
     AnalisisColor = [color, Porcentajecolor]
@@ -92,13 +94,13 @@ def AnalisFrame (color, rango_bajos, rango_altos):
     PorcentajePixel.append(Porcentajecolor)
 
     
-    print ("Scala: ", color)
+    """print ("Scala: ", color)
     print ("back", PorcentajeBlack)
     print ("Color", Pcolor)
     print ("%", "{0:.2f}".format(Porcentajecolor))
     print ("Total-pixel", Pcolor + PorcentajeBlack)
     cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    cv2.destroyAllWindows()"""
     
 
     #input()
