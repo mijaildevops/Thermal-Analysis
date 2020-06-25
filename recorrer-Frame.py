@@ -3,10 +3,20 @@ import numpy as np
 
 from datetime import datetime
 StartProcess = datetime.now()
-
 from time import time
+
 from PIL import Image
 
+# DB
+import pymysql
+# GUID
+import uuid 
+
+#///////////////////////////////////////////
+# Generamos Un GUID 
+#///////////////////////////////////////////
+IdUnico = uuid.uuid4()
+GuidTest = str(IdUnico)
 
 #////////////////////////
 CountFrame = 1
@@ -25,9 +35,12 @@ while (CountFrame < 73):
     print ("--------------- New Frame ----------------")
     # Time start 
     starttimeFrame = time()
+    PercentageTotal = []
 
     # interacciones por cada Scala definida
     for Scala in Scalas:
+
+        starttimeScala = time()
 
         # Clasificacion de scalas
         if (Scala == 1):
@@ -68,11 +81,11 @@ while (CountFrame < 73):
         else:
             #fuchsia
             Color = "Fuchsia"
-            Scala_bajos = np.array([130,50,50])
-            Scala_altos = np.array([168, 255, 255])
+            Scala_bajos = np.array([130,100, 20])
+            Scala_altos = np.array([169, 255, 255])
 
         
-
+        
         PixelBlack = 0
         Pixelcolor = 0
 
@@ -119,16 +132,38 @@ while (CountFrame < 73):
         print (" - Pixel-Color: ", Pixelcolor)
         print (" - % Pixel-Color: ", PorcentajeColorPixel,"%")
 
+        PercentageTotal.append(PorcentajeColorPixel)
+
+        # Time Frame Process
+        elapsedtimeScala = time() - starttimeScala
+        TimeScala = float("{0:.4f}".format(elapsedtimeScala))
+
+        # 
+        from AddFrameData import AddDataFrameScala
+        AddDataFrameScala (GuidTest, FrameProcess, Scala, TotalPixelsImg, PixelBlack, Pixelcolor, PorcentajeColorPixel, TimeScala)
+
+        #
+        print("Elapsed time Scala: %0.4f seconds." % elapsedtimeScala)
+
     print("")
     CountFrame += 1
 
     # Time Frame Process
     elapsedtimeFrame = time() - starttimeFrame
-    print("Elapsed time Frame: %0.10f seconds." % elapsedtimeFrame)
+    TimeFrame = float("{0:.4f}".format(elapsedtimeFrame))
+    #
+    print("Elapsed time Frame: %0.4f seconds." % elapsedtimeFrame)
+
+    #
+    SumPorcentaje = sum(PercentageTotal)
+    from AddFrameData import AddFrameProcessing
+    AddFrameProcessing (GuidTest, FrameProcess, SumPorcentaje, TimeFrame)
 
 
 elapsed_time = time() - start_time
-print("Elapsed time Total: %0.10f seconds." % elapsed_time)
+TimeProcess = float("{0:.4f}".format(elapsed_time))
+#
+print("Elapsed time Total: %0.4f seconds." % elapsed_time)
 
 from datetime import datetime
 EndProcess = datetime.now()

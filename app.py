@@ -69,10 +69,10 @@ def AnalisFrame (color, rango_bajos, rango_altos):
     #print(len(mask))
 
     #Mostramos la imagen original y la máscara:
-    #cv2.imshow("Original", img)
+    cv2.imshow("Original", img)
 
     #Mostramos la imagen original y la máscara:
-    #cv2.imshow(color, mask)
+    cv2.imshow(color, mask)
 
     cv2.imwrite('FramePresado.png',mask)
     
@@ -103,7 +103,7 @@ def AnalisFrame (color, rango_bajos, rango_altos):
     cv2.destroyAllWindows()"""
     
 
-    #input()
+    input()
     
  
 AnalisFrame (Scala1, Scala1_bajos, Scala1_altos)
