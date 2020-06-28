@@ -2,7 +2,7 @@
 import pymysql
 
 # //////////////////////////////////////
-# Conexion
+# Conexion- from Visual Studio
 # //////////////////////////////////////
 from Conexion import Conexion
 
