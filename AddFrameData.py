@@ -28,9 +28,9 @@ def AddDataFrameScala (GuidTest, FrameProcess, Scala, TotalPixelsImg, PixelBlack
             # your changes.
             connection.commit()
 
-            print ("///////////////////////////////////////////////////////////////////")
-            print ("   --  Se realizo Registro del Analisis del Frame-Scala", FrameProcess, "- Scala", Scala)
-            print ("///////////////////////////////////////////////////////////////////")
+            #print ("///////////////////////////////////////////////////////////////////")
+            #print ("   --  Se realizo Registro del Analisis del Frame-Scala", FrameProcess, "- Scala", Scala)
+            #print ("///////////////////////////////////////////////////////////////////")
 
     finally:
         connection.close()
